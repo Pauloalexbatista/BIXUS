@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: bixus-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: bixus
+      POSTGRES_USER: bixus
+      POSTGRES_PASSWORD: bixus_secret_2026
+    volumes:
+      - bixus_pgdata:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bixus-app
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://bixus:bixus_secret_2026@postgres:5432/bixus
+      - PORT=3000
+    env_file:
+      - .env
+
+volumes:
+  bixus_pgdata:

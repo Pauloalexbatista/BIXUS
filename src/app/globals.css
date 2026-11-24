@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f2f8f5;
+  --bg-card: #ffffff;
+  --bg-accent-soft: #e3f2eb;
+  --text-primary: #0d3b2a;
+  --text-secondary: #3b6353;
+  --text-muted: #5c7d70;
+  --accent-green: #0e4b35;
+  --accent-green-hover: #146648;
+  --accent-gold: #e5a400;
+  --accent-gold-soft: #fff6d9;
+  --border-color: #d7e8df;
+  --shadow-soft: 0 10px 30px -10px rgba(14, 75, 53, 0.1);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #082d20;
+  --bg-secondary: #0c3b2a;
+  --bg-card: #104934;
+  --bg-accent-soft: #155940;
+  --text-primary: #ffffff;
+  --text-secondary: #d4ebe1;
+  --text-muted: #9bc4b4;
+  --accent-green: #f5b700;
+  --accent-green-hover: #ffc72c;
+  --accent-gold: #f5b700;
+  --accent-gold-soft: rgba(245, 183, 0, 0.16);
+  --border-color: #1c664a;
+  --shadow-soft: 0 14px 35px -10px rgba(0, 0, 0, 0.45);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+
+.bixus-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
+}
+
+.bixus-btn-primary {
+  background-color: var(--accent-green);
+  color: #ffffff;
+  transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+[data-theme="dark"] .bixus-btn-primary {
+  color: #082d20;
+  font-weight: 700;
+}
+
+.bixus-btn-primary:hover {
+  background-color: var(--accent-green-hover);
+  transform: translateY(-1px);
+}

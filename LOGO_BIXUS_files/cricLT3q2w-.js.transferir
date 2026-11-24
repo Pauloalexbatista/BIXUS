@@ -1,0 +1,4 @@
+;/*FB_PKG_DELIM*/
+
+__d("CometFeedProfileActionInvalidation",["cr:18890","cr:18891"],(function(t,n,r,o,a,i,l){"use strict";var e=n("cr:18890")!=null?n("cr:18890"):n("cr:18891");l.default=e}),98);
+__d("enqueueMutationWithServerCompleted",["RelayFBMutations","enqueueMutation"],(function(t,n,r,o,a,i,l){"use strict";var e=["onCompleted","onServerCompleted"];function s(t,n){var a=n.onCompleted,i=n.onServerCompleted,l=babelHelpers.objectWithoutPropertiesLoose(n,e),s=!1,u=null,c=function(){for(var e=arguments.length,t=new Array(e),n=0;n<e;n++)t[n]=arguments[n];s?i==null||i(t[0],u):a==null||a.apply(void 0,t)},d=r("RelayFBMutations").addFBisms(function(e,t){return o("enqueueMutation").enqueueMutation(e,babelHelpers.extends({},t,{onServerCompleted:i==null?void 0:function(e,n){if(e==null){i(null,n);return}s=!0,u=n;try{t.onCompleted==null||t.onCompleted(e,null)}finally{s=!1,u=null}}}))});return d(t,babelHelpers.extends({},l,{onCompleted:c}))}l.default=s}),98);
