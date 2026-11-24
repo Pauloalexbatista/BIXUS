@@ -29,6 +29,7 @@ services:
         condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://bixus:bixus_prod_2026_secret@bixus-postgres:5432/bixus
+      - HOSTNAME=0.0.0.0
       - PORT=3000
       - SITE_PREVIEW_PASSWORD=bixus2026
       - ADMIN_EMAIL=admin@bixus.pt
