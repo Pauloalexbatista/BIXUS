@@ -1,0 +1,63 @@
+services:
+  bixus-postgres:
+    image: postgres:16-alpine
+    container_name: bixus-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: bixus
+      POSTGRES_USER: bixus
+      POSTGRES_PASSWORD: bixus_prod_2026_secret
+    volumes:
+      - /opt/bixus/postgres-data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    networks:
+      - bixus-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bixus -d bixus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  bixus-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bixus-app
+    restart: always
+    depends_on:
+      bixus-postgres:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://bixus:bixus_prod_2026_secret@bixus-postgres:5432/bixus
+      - PORT=3000
+      - SITE_PREVIEW_PASSWORD=bixus2026
+      - ADMIN_EMAIL=admin@bixus.pt
+      - ADMIN_PASSWORD=bixusadmin2026
+      - AUTH_SECRET=bixus-vps-secret-key-2026
+    networks:
+      - bixus-network
+      - coolify
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=coolify"
+      - "traefik.http.services.bixus.loadbalancer.server.port=3000"
+      # Preview imediato via sslip.io
+      - "traefik.http.routers.bixus-preview.entryPoints=http"
+      - "traefik.http.routers.bixus-preview.rule=Host(`bixus.187.7.68.192.sslip.io`)"
+      - "traefik.http.routers.bixus-preview.service=bixus"
+      # Dominio testenet.site (HTTP -> HTTPS + HTTPS com Let's Encrypt)
+      - "traefik.http.routers.bixus-http.entryPoints=http"
+      - "traefik.http.routers.bixus-http.rule=Host(`testenet.site`) || Host(`www.testenet.site`)"
+      - "traefik.http.routers.bixus-http.middlewares=redirect-to-https"
+      - "traefik.http.routers.bixus-http.service=bixus"
+      - "traefik.http.routers.bixus-https.entryPoints=https"
+      - "traefik.http.routers.bixus-https.rule=Host(`testenet.site`) || Host(`www.testenet.site`)"
+      - "traefik.http.routers.bixus-https.tls=true"
+      - "traefik.http.routers.bixus-https.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.bixus-https.service=bixus"
+
+networks:
+  bixus-network:
+    driver: bridge
+  coolify:
+    external: true
