@@ -1,21 +1,8 @@
 import type { Metadata } from 'next';
-import { Fredoka, Plus_Jakarta_Sans } from 'next/font/google';
 import { AppProvider } from '@/context/AppContext';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import './globals.css';
-
-const fredoka = Fredoka({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-display',
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-body',
-});
 
 export const metadata: Metadata = {
   title: 'BIXUS.PT | O melhor de Nós para Eles — Cães e Gatos',
@@ -29,7 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt" suppressHydrationWarning className={`${fredoka.variable} ${jakarta.variable}`}>
+    <html lang="pt" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>
         <AppProvider>
           <Header />

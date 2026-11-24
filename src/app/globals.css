@@ -40,12 +40,12 @@ html {
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1, h2, h3, h4, .font-display {
-  font-family: var(--font-display), system-ui, sans-serif;
+  font-family: 'Fredoka', system-ui, sans-serif;
 }
 
 .bixus-card {
